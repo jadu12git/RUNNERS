@@ -28,11 +28,16 @@ export async function POST(req) {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
-
+    
     const eventId = session.metadata.event_id;
     const userId = session.metadata.user_id;
     const quantity = Number(session.metadata.quantity);
     const totalPrice = session.amount_total / 100;
+    
+    //temp!!!
+    console.log("Webhook type:", event.type);
+    console.log("Session metadata:", session.metadata);
+
 
     // 1️⃣ Create order
     const { data: order, error: orderError } = await supabase
@@ -52,6 +57,10 @@ export async function POST(req) {
       return new Response("Order error", { status: 500 });
     }
 
+    //temp!!!
+    console.log("Order created:", order);
+
+
     // 2️⃣ Create tickets
     const tickets = Array.from({ length: quantity }).map(() => ({
       order_id: order.id,
@@ -68,6 +77,9 @@ export async function POST(req) {
       console.error("Ticket creation failed:", ticketError);
       return new Response("Ticket error", { status: 500 });
     }
+
+    //temp!!!
+    console.log("Tickets inserted:", tickets.length);
 
     // 3️⃣ Decrement inventory
     await supabase.rpc("decrement_tickets", {

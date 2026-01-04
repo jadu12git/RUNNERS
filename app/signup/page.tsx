@@ -7,14 +7,15 @@ import Navbar from "@/components/Navbar";
 import AuthForm from "@/components/AuthForm";
 
 export default function SignUpPage() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
 
+  // Only block users who are ALREADY logged in
   useEffect(() => {
-    if (user) {
+    if (!loading && user) {
       router.push("/");
     }
-  }, [user, router]);
+  }, [user, loading, router]);
 
   return (
     <>

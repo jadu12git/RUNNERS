@@ -18,18 +18,22 @@ export default function AuthForm({ type }) {
     const router = useRouter();
     const { signIn, signUp } = useAuth();
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
-
+    
+        try {
         if (isSignUp) {
-        signUp(email);
-        router.push("/signin?from=signup");
+            await signUp(email, password);
+            router.push("/signin?from=signup");
         } else {
-        // actual login
-        signIn(email);
-        router.push("/");
+            await signIn(email, password);
+            router.push("/");
+        }
+        } catch (err) {
+        alert(err.message);
         }
     }
+    
     return (
         <form
         onSubmit={handleSubmit}

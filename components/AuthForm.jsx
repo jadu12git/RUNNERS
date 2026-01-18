@@ -4,12 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { useSearchParams } from "next/navigation";
 
 export default function AuthForm({ type }) {
-    const searchParams = useSearchParams();
-    const fromSignup = searchParams.get("from") === "signup";
-    
     const isSignUp = type === "signup";
 
     const [email, setEmail] = useState("");

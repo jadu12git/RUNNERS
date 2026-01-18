@@ -7,11 +7,11 @@ import Navbar from "@/components/Navbar";
 import AuthForm from "@/components/AuthForm";
 
 export const dynamic = "force-dynamic";
+
 export default function SignUpPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
 
-  // Only block users who are ALREADY logged in
   useEffect(() => {
     if (!loading && user) {
       router.push("/");

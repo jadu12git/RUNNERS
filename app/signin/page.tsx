@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
@@ -7,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import AuthForm from "@/components/AuthForm";
 import SoundWaveBackground from "@/components/SoundWaveBackground";
 
+export const dynamic = "force-dynamic";
 export default function SignInPage() {
 const { user, loading } = useAuth();
 const router = useRouter();
